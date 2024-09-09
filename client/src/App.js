@@ -16,7 +16,8 @@ const App = () => {
     { Subject: 'TA335'}, { Subject: 'TA336'}, { Subject: 'TA337'}, { Subject: 'TA338'}, { Subject: 'TA339'}, { Subject: 'TA340'}, { Subject: 'TA341'}, { Subject: 'TA342'}, { Subject: 'TA343'}, { Subject: 'TA344'},
     
   ]);
-  const [columns, setColumns] = useState(['Subject', 'Age', 'Sex', 'OnsetAge', 'Handedness', 'DomHemi', 'Wada', 'fMRI', 'CSM', 'SurgHemi', 'SurgType']);
+  const [columns, setColumns] = useState(['Subject', 'Age', 'Sex', 'OnsetAge', 'Handedness', 'DomHemi', 'Wada', 'fMRI', 'CSM', 'SurgHemi', 'SurgType', 'Edit']);
+  const [editIndex, setEditIndex] = useState(null);
 
   useEffect(() => {
     const table = new DataTable('#example');
@@ -51,6 +52,25 @@ const App = () => {
     reader.readAsArrayBuffer(file);
   };
 
+  const handleEditClick = (index) => {
+    setEditIndex(index);
+  };
+
+  const handleSaveClick = (index) => {
+    setEditIndex(null);
+  };
+
+  const handleCancelClick = () => {
+    setEditIndex(null);
+  };
+
+  const handleInputChange = (e, index, field) => {
+    const { value } = e.target;
+    const updatedData = [...tableData];
+    updatedData[index][field] = value;
+    setTableData(updatedData);
+  };
+
   return (
     <div className="container">
       <link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.css" />
@@ -67,13 +87,33 @@ const App = () => {
               </tr>
           </thead>
           <tbody>
-            {tableData.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {columns.map((col, colIndex) => (
-                  <td key={colIndex}>{row[col]}</td>
-                ))}
-              </tr>
-            ))}
+          {tableData.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {columns.slice(0, -1).map((col, colIndex) => (
+                <td key={colIndex}>
+                  {editIndex === rowIndex && col !== 'Subject' ? (
+                    <input
+                      type="text"
+                      value={row[col]}
+                      onChange={(e) => handleInputChange(e, rowIndex, col)}
+                    />
+                  ) : (
+                    row[col]
+                  )}
+                </td>
+              ))}
+              <td>
+                {editIndex === rowIndex ? (
+                  <>
+                    <button onClick={() => handleSaveClick(rowIndex)}>Save</button>
+                    <button onClick={handleCancelClick}>Cancel</button>
+                  </>
+                ) : (
+                  <button onClick={() => handleEditClick(rowIndex)}>Edit</button>
+                )}
+              </td>
+            </tr>
+          ))}
           </tbody>
         </table>
     </div>
