@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import $ from 'jquery';
 import 'datatables.net';
+import TableContent from './components/TableContent'
 import { handleAddRow } from './components/addRow';
 import { handleExcelUpload } from './components/uploadExcel';
 
@@ -48,77 +49,7 @@ const App = () => {
         <div class="container">
           <p><button id="addRow">Add new row</button></p>
           <p><button id="button">Delete selected row</button></p>
-          <table id="example" class="display nowrap" width="100%">
-            <thead>
-              <tr>
-                <th>Subject</th>
-                <th>Age</th>
-                <th>Sex</th>
-                <th>OnsetAge</th>
-                <th>Handedness</th>
-                <th>DomHemi</th>
-                <th>Wada</th>
-                <th>fMRI</th>
-                <th>CSM</th>
-                <th>SurgHemi</th>
-                <th>SurgType</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>TA310</th>
-                <th>50</th>
-                <th>F</th>
-                <th>26</th>
-                <th>R</th>
-                <th>B</th>
-                <th>-</th>
-                <th>B</th>
-                <th> </th>
-                <th>R</th>
-                <th>ATL+AH</th>
-              </tr>
-              <tr>
-                <th>TA311</th>
-                <th>62</th>
-                <th>F</th>
-                <th>25</th>
-                <th>R</th>
-                <th>L</th>
-                <th>-</th>
-                <th>L</th>
-                <th> </th>
-                <th>L</th>
-                <th>ATL+AH+Other</th>
-              </tr>
-              <tr>
-                <th>TA312</th>
-                <th>43</th>
-                <th>F</th>
-                <th>17</th>
-                <th>R</th>
-                <th>R</th>
-                <th>R</th>
-                <th>R</th>
-                <th> </th>
-                <th>L</th>
-                <th>ATL+AH</th>
-              </tr>
-              <tr>
-                <th>TA313</th>
-                <th>44</th>
-                <th>F</th>
-                <th> </th>
-                <th>R</th>
-                <th>L</th>
-                <th>-</th>
-                <th>L</th>
-                <th> </th>
-                <th>L</th>
-                <th>Other</th>
-              </tr> 
-            </tbody>
-      </table>
+          <TableContent />
     </div>
   </body>
 </html>
