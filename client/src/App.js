@@ -24,6 +24,10 @@ const App = () => {
       table.row('.selected').remove().draw(false);
     });
 
+    $('#uploadButton').on('click', function () {
+      $('#uploadExcel').click();
+    });
+
     return () => {
       $('#example tbody').off('click', 'tr');
       $('#button').off('click');
