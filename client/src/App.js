@@ -4,6 +4,7 @@ import 'datatables.net';
 import TableContent from './components/TableContent'
 import { handleAddRow } from './components/addRow';
 import { handleExcelUpload } from './components/uploadExcel';
+import { handleExcelExport } from './components/exportExcel';
 
 const App = () => {
   useEffect(() => {
@@ -11,6 +12,7 @@ const App = () => {
 
     handleAddRow(table);
     handleExcelUpload(table);
+    handleExcelExport(table);
 
     $('#example tbody').on('click', 'tr', function () {
       if ($(this).hasClass('selected')) {
@@ -50,6 +52,7 @@ const App = () => {
           <p><button id="addRow">Add new row</button></p>
           <p><button id="button">Delete selected row</button></p>
           <TableContent />
+          <p><button id="exportButton">Export Excel</button></p>
     </div>
   </body>
 </html>
