@@ -1,18 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import $ from 'jquery';
 import 'datatables.net';
 import TableContent from './components/TableContent'
 import { handleAddRow } from './components/addRow';
 import { handleExcelUpload } from './components/uploadExcel';
 import { handleExcelExport } from './components/exportExcel';
+import { handleEditRow } from './components/editRow';
+
 
 const App = () => {
+  const [formData, setFormData] = useState({});
+  const [editingRowIndex, setEditingRowIndex] = useState(null);
+  
   useEffect(() => {
     const table = $('#example').DataTable();
 
     handleAddRow(table);
     handleExcelUpload(table);
     handleExcelExport(table);
+    handleEditRow(table, setFormData, setEditingRowIndex);
 
     $('#example tbody').on('click', 'tr', function () {
       if ($(this).hasClass('selected')) {
@@ -23,7 +29,7 @@ const App = () => {
       }
     });
 
-    $('#button').on('click', function () {
+    $('#buttonDelete').on('click', function () {
       table.row('.selected').remove().draw(false);
     });
 
@@ -33,13 +39,35 @@ const App = () => {
 
     return () => {
       $('#example tbody').off('click', 'tr');
-      $('#button').off('click');
+      $('#buttonDelete').off('click');
+      $('#buttonEdit').off('click');
       $('#addRow').off('click');
-      $('#example').off('blur', '.editable');
+      $('#uploadButton').off('click');
     };
   }, []);
-  
-      
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    if (editingRowIndex !== null) {
+      const table = $('#example').DataTable();
+      const updatedData = Object.values(formData);
+
+      table.row(editingRowIndex).data(updatedData).draw(false);
+
+      setFormData({});
+      setEditingRowIndex(null);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+    
   return (
     <html>
       <head>
@@ -50,12 +78,31 @@ const App = () => {
       <body>
         <div class="container">
           <p><button id="addRow">Add new row</button></p>
-          <p><button id="button">Delete selected row</button></p>
-          <TableContent />
+          <p><button id="buttonEdit">Edit Row</button></p>
+          <p><button id="buttonDelete">Delete selected row</button></p>
           <p><button id="exportButton">Export Excel</button></p>
-    </div>
-  </body>
-</html>
+          
+          <TableContent />
+          
+          {editingRowIndex !== null && (
+            <form onSubmit={handleFormSubmit}>
+              {Object.keys(formData).map((columnName) => (
+                <div key={columnName}>
+                  <label>{columnName}:</label>
+                  <input
+                    type="text"
+                    name={columnName}
+                    value={formData[columnName] || ''}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              ))}
+              <button type="submit">Submit</button>
+            </form>
+          )}
+        </div>
+      </body>
+    </html>
   );
 };
 
