@@ -1,73 +1,25 @@
 import $ from 'jquery';
 
-const createEditableCell = (value = '') => {
-    return `<input type="text" class="editable" value="${value}" />`;
-};
-
-export const handleAddRow = (table) => {
+export const handleAddRow = (setFormData, setEditingRowIndex) => {
     const addNewRow = () => {
-        const newRow = [
-            createEditableCell(),
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(),
-            createEditableCell(),
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(),
-            createEditableCell(),
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(),
-            createEditableCell(),
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(), 
-            createEditableCell(),
-            createEditableCell(), 
-            createEditableCell(), 
+        const newFormData = {};
+
+        const tableHeaders = [
+            'Subject', 'Age', 'Sex', 'OnsetAge', 'Handedness', 'DomHemi', 'Wada', 'fMRI', 'CSM', 'SurgHemi',
+            'SurgType', 'SurgDescription', 'SurgDate', 'ILAE', 'Engel', 'MRI', 'SurgHx', 'SurgHxHemi', 'SurgHxType', 'SurgHxDate',
+            'PreNP_DOE', 'PostNP_DOE', 'FSIQ', 'English', 'ECoG_Hemi', 'ECoG', 'ImplantDate', 'AwakeCSM', 'AwakeCSM_Tasks', 'AsleepCSM',
+            'AsleepCSM_Tasks', 'Prime', 'ThalamusStim', 'Meg', 'Rearranged', 'Reimplant', 'Reop', 'PostopMRI', 'fMRI', 'RNS',
+            'DBS', 'DBS_PhaseII', 'DBS_PostTest', 'Combo', 'ALICE', 'Notes',
         ];
 
-        table.row
-            .add(newRow)
-            .draw(false);
-        attachEditListeners();
+        tableHeaders.forEach(header => {
+            newFormData[header] = '';
+        });
+
+        setFormData(newFormData);
+        setEditingRowIndex('new');
     };
 
-    $('#addRow').off('click').on('click', addNewRow);
+    $('#addRow').off('click').on('click', addNewRow)
 };
 
-const attachEditListeners = () => {
-    $('#example').off('blur', '.editable').on('blur', '.editable', function () {
-        const cell = $(this).closest('td');
-        const value = $(this).val();
-        cell.html(value);
-    });
-}

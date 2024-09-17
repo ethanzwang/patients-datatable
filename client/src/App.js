@@ -15,7 +15,7 @@ const App = () => {
   useEffect(() => {
     const table = $('#example').DataTable();
 
-    handleAddRow(table);
+    handleAddRow(setFormData, setEditingRowIndex);
     handleExcelUpload(table);
     handleExcelExport(table);
     handleEditRow(table, setFormData, setEditingRowIndex);
@@ -49,15 +49,18 @@ const App = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    if (editingRowIndex !== null) {
-      const table = $('#example').DataTable();
-      const updatedData = Object.values(formData);
+    const table = $('#example').DataTable();
+    const updatedData = Object.values(formData);
 
+    if (editingRowIndex === 'new') {
+
+      table.row.add(updatedData).draw(false);
+    } else if (editingRowIndex !== null) {
       table.row(editingRowIndex).data(updatedData).draw(false);
-
-      setFormData({});
-      setEditingRowIndex(null);
     }
+
+    setFormData({});
+    setEditingRowIndex(null);
   };
 
   const handleInputChange = (e) => {
