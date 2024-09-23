@@ -4,11 +4,6 @@ import * as XLSX from 'xlsx';
 export const handleExcelUpload = (table) => {
     let fileInput = $('#uploadExcel');
 
-    if (fileInput.length === 0) {
-        fileInput = $('<input type="file" id="uploadExcel" accept=".xlsx, .xls" />');
-        $('.container').append(fileInput);
-    }
-
     fileInput.on('change', function (e) {
         const file = e.target.files[0];
 
@@ -67,15 +62,6 @@ export const handleExcelUpload = (table) => {
                                 excelRow['Rearranged'] || rowData[34],
                                 excelRow['Reimplant'] || rowData[35],
                                 excelRow['Reop'] || rowData[36],
-                                excelRow['PostopMRI'] || rowData[37],
-                                excelRow['fMRI'] || rowData[38],
-                                excelRow['RNS'] || rowData[39],
-                                excelRow['DBS'] || rowData[40],
-                                excelRow['DBS_PhaseII'] || rowData[41],
-                                excelRow['DBS_PostTest'] || rowData[42],
-                                excelRow['Combo'] || rowData[43],
-                                excelRow['ALICE'] || rowData[44],
-                                excelRow['Notes'] || rowData[45],
                                 
                             ];
                             this.data(updatedData);
