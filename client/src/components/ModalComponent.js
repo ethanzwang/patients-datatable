@@ -1,5 +1,5 @@
 import React from 'react';
-import './ModalComponent.css';
+import './App.css';
 
 const ModalComponent = ({ show, handleClose, handleSubmit, formData, handleInputChange }) =>  {
     if(!show) {
@@ -7,10 +7,10 @@ const ModalComponent = ({ show, handleClose, handleSubmit, formData, handleInput
     }
 
     return (
-        <div className="modal-overlay">
-            <div className="modal-content">
-                <h2>Add/Edit Row</h2>
-                <form onSubmit={handleSubmit}>
+        <>
+            <div className="modal-overlay" onClick={handleClose}></div>
+            <div className="modal">
+                <form onSubmit={handleSubmit} className="modal-form">
                     {Object.keys(formData).map((columnName) => (
                         <div key={columnName}>
                             <label>{columnName}:</label>
@@ -22,11 +22,14 @@ const ModalComponent = ({ show, handleClose, handleSubmit, formData, handleInput
                             />
                         </div>
                     ))}
-                    <button type="submit">Submit</button>
-                    <button type="button" onClick={handleClose}>Close</button>
+                    <div className="modal-buttons">
+                        <button type="submit" className="submit">Submit</button>
+                        <button type="button" className="cancel" onClick={handleClose}>Close</button>
+                    </div>    
                 </form>
             </div>
-        </div>
+        </>
+        
     );
 };
 

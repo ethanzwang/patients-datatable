@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const TableContent = () => {
     return (
         <table id="example" class="display nowrap" width="100%">
@@ -20,6 +21,7 @@ const TableContent = () => {
                 <th>SurgDate</th>
                 <th>ILAE</th>
                 <th>Engel</th>
+                <th>Etiology</th>
                 <th>MRI</th>
                 <th>SurgHx</th>
                 <th>SurgHxHemi</th>
@@ -29,9 +31,11 @@ const TableContent = () => {
                 <th>PostNP_DOE</th>
                 <th>FSIQ</th>
                 <th>English</th>
+                <th>VNS</th>
                 <th>ECoG_Hemi</th>
                 <th>ECoG</th>
                 <th>ImplantDate</th>
+                <th>ExplantDate</th>
                 <th>AwakeCSM</th>
                 <th>AwakeCSM_Tasks</th>
                 <th>AsleepCSM</th>
@@ -39,9 +43,6 @@ const TableContent = () => {
                 <th>Prime</th>
                 <th>ThalamusStim</th>
                 <th>Meg</th>
-                <th>Rearranged</th>
-                <th>Reimplant</th>
-                <th>Reop</th>
               </tr>
             </thead>
             <tbody>

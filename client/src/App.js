@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import $ from 'jquery';
 import 'datatables.net';
+import './App.css';
 import TableContent from './components/TableContent'
 import { handleAddRow } from './components/addRow';
 import { handleExcelUpload } from './components/uploadExcel';
@@ -71,13 +72,13 @@ const App = () => {
       const newRow = table.row.add(updatedData).draw(false).node();
       $(newRow).find('td').css({
         'font-weight': 'bold',
-        'text-align': 'center',
+        'text-align': 'left',
       });
     } else if (editingRowIndex !== null) {
       const rowNode = table.row(editingRowIndex).data(updatedData).draw(false).node();
       $(rowNode).find('td').css({
         'font-weight': 'bold',
-        'text-align': 'center',
+        'text-align': 'left',
       });
     }
     
@@ -113,12 +114,15 @@ const App = () => {
       </head>
       <body>
         <div class="container">
-          <p><button id="addRow" onClick={openModal}>Add new row</button></p>
-          <p><button id="buttonEdit" onClick={openModal}>Edit Row</button></p>
-          <p><button id="buttonDelete">Delete selected row</button></p>
-          <p><button id="exportButton">Export Excel</button></p>
-          <p><button id="uploadButton">Upload Excel</button></p>
-          <input type="file" id="uploadExcel" style={({ display: 'none' })} />
+          <div className="controls">
+            <p><button id="addRow" onClick={openModal}>Add new row</button></p>
+            <p><button id="buttonEdit" onClick={openModal}>Edit Row</button></p>
+            <p><button id="buttonDelete">Delete selected row</button></p>
+            <p><button id="exportButton">Export Excel</button></p>
+            <p><button id="uploadButton">Upload Excel</button></p>
+            <input type="file" id="uploadExcel" style={({ display: 'none' })} />
+          </div>
+          
           <TableContent />
           
           <ModalComponent
